@@ -1,0 +1,507 @@
+@startuml
+class com.example.attackofthelivingmodules.Scores {
+- String name
+- int score
++ String getName()
++ int getScore()
+}
+
+
+class com.example.elements.SpeedBoost {
++ void effects(Player,long,int)
+}
+
+class com.example.attackofthelivingmodules.LeaderboardController {
+- Image mainMenuReleased
+- Image mainMenuPressed
+- List<Scores> singleRanking
+- List<Scores> twoRanking
+- Label singleName1
+- Label singleName2
+- Label singleName3
+- Label singleName4
+- Label singleName5
+- Label singleScore1
+- Label singleScore2
+- Label singleScore3
+- Label singleScore4
+- Label singleScore5
+- Label twoName1
+- Label twoName2
+- Label twoName3
+- Label twoName4
+- Label twoName5
+- Label twoScore1
+- Label twoScore2
+- Label twoScore3
+- Label twoScore4
+- Label twoScore5
+- ImageView mainMenuImage
+- Button mainMenuButton
+- void mainMenuButtonPressed()
+- void mainMenuButtonReleased()
+- void onMainMenuButtonPressed(ActionEvent)
+- void readFile(String,List<Scores>)
++ void initialize(double,Audio)
+- void setLabels(Label,Label,List<Scores>,int)
+}
+
+
+class com.example.elements.ExtraLife {
+- GameplayController controller
++ void effects(Player,long,int)
+}
+
+
+class com.example.elements.Mid {
+- double targetX
+- double targetY
+- boolean targetToUp
+- boolean targetToRight
+- boolean targetReachedX
+- boolean targetReachedY
+- void getTargets()
+- void moveX(double)
+- void moveY(double)
++ void update(double)
++ Image getBulletImage()
+}
+
+
+class com.example.attackofthelivingmodules.MainApplication {
+- {static} Stage globStage
++ void start(Stage)
++ void changeScene(String,int,int,Audio)
++ {static} void main(String[])
+}
+
+
+class com.example.gameplay.TwoPlayerGameplay {
+- GraphicsContext gc
+- GameplayController controller
+- Image backgroundImage
+- Image player1Left
+- Image player1Right
+- Image player1LeftDamage
+- Image player1RightDamage
+- Image playerBullet
+- Image player2Left
+- Image player2Right
+- Image player2LeftDamage
+- Image player2RightDamage
+- StageUp stageUp
+- Movement movement
+- Audio audio
+- Random random
+- Player player1
+- Player player2
+- Set<KeyCode> keysPressed
+- List<Bullet> playerBullets
+- List<Bullet> enemyBullets
+- List<Enemy> enemyList
+- List<PowerUp> powerUpList
+- List<Player> playerList
+- List<Player> deadPlayerList
+- {static} long COOLDOWN
+- {static} long enemyBulletCooldown
+- long lastPlayerBulletTimeP1
+- long lastPlayerBulletTimeP2
+- long lastEnemyBulletTime
+- double enemySpeed
+- double initialPos
+- {static} long SPAWN_TIME
+- long lastPowerUpSpawn
+- {static} double powerUpSpeed
+- void update(long)
+- void render(GraphicsContext)
+- void handleKeyPress(KeyEvent)
+- void handleKeyRelease(KeyEvent)
+- void drawPlayers()
+- void drawEnemies()
+- void drawBullets()
+- void drawPowerUp()
+- void shootBullet(long)
+- void spawnPowerUp(long)
+- void playerUpdates(long)
+- void playerMovement()
+}
+
+
+class com.example.elements.Mob {
++ void update(double)
++ Image getBulletImage()
+}
+
+abstract class com.example.elements.GameObject {
+- Image sprite
+# double positionX
+# double positionY
++ void setImage(Image)
++ Image getImage()
++ void setX(double)
++ double getX()
++ void setY(double)
++ double getY()
++ double getWidth()
++ double getHeight()
+}
+
+
+class com.example.elements.Boss {
+- boolean movingLeft
++ void update(double)
++ Image getBulletImage()
++ void shoot(long,double)
+}
+
+
+class com.example.attackofthelivingmodules.GameplayController {
+- Canvas canvas
+- Label score
+- Label lives1
+- Label lives2
+- Label stage
++ void setScore(int)
++ void setLives1(int)
++ void setLives2(int)
++ void setStage(int)
++ int getScore()
++ int getStage()
++ Canvas getCanvas()
++ void initialize(String)
+}
+
+
+class com.example.elements.AttackUp {
++ void effects(Player,long,int)
+}
+
+class com.example.elements.Player {
+- int playerNumber
+- int playerBulletDamage
+- boolean alive
+- boolean isDamaged
+- double playerSpeed
+- boolean powerUpActive
+- long powerUpPickUpTime
+- {static} long POWER_UP_DURATION
+- boolean canBeDamaged
+- Movement movement
++ void setPlayerNumber(int)
++ int getPlayerNumber()
++ void setX(double)
++ void setY(double)
++ boolean isAlive()
++ void takeDamage(int,long)
++ boolean isDamaged()
++ void revert(long,Audio)
++ double getPlayerSpeed()
++ void setPlayerSpeed(double)
++ void setPowerUpActive()
++ boolean isPowerUpActive()
++ void setPowerUpPickUpTime(long)
++ void setCannotBeDamaged()
++ void setPlayerBulletDamage(int)
++ int getPlayerBulletDamage()
+}
+
+
+class com.example.elements.Invincibility {
++ void effects(Player,long,int)
+}
+
+class com.example.elements.Bullet {
+- double xSpeed
+- double ySpeed
++ void setXSpeed(double)
++ void setYSpeed(double)
++ void update()
+}
+
+
+class com.example.gameplay.StageUp {
+- GameplayController controller
+- List<Enemy> enemyList
+- List<Bullet> enemyBullets
+- Audio audio
+- int lifeMultiplier
+- double updateStage(double)
++ double initializeEnemies(double,double,Movement)
+}
+
+
+class com.example.attackofthelivingmodules.TopController {
+# VBox root
+# Audio audio
++ void initialize(double,Audio)
+# void applyCustomFontToLabels(Parent,Font)
+}
+
+
+class com.example.elements.Multiplier2x {
++ void effects(Player,long,int)
+}
+
+abstract class com.example.elements.HighTierEnemy {
+# List<Bullet> enemyBullets
+# long OVERALL_COOLDOWN
+# long CHAIN_COOLDOWN
+# long lastChainShot
+# long lastShot
+# int shotNumber
+# Audio audio
++ {abstract}void shoot(long,double)
+}
+
+
+class com.example.gameplay.Audio {
+- MediaPlayer backgroundMusic
+- MediaPlayer finalBossMusic
+- MediaPlayer bossBulletEffect
+- MediaPlayer midBulletEffect
+- MediaPlayer mobBulletEffect
+- MediaPlayer nailBulletEffect
+- MediaPlayer playerBulletEffect
+- MediaPlayer powerUpEffect
+- MediaPlayer powerDownEffect
+- MediaPlayer playerHitEffect
+- MediaPlayer enemyHitEffect
+- MediaPlayer nextStageEffect
+- MediaPlayer mainMenuMusic
++ void playBackgroundMusic()
++ void stopBackgroundMusic()
++ void playBossBulletEffect()
++ void playFinalBossMusic()
++ void stopFinalBossMusic()
++ void playMidBulletEffect()
++ void playMobBulletEffect()
++ void playNailBulletEffect()
++ void playPlayerBulletEffect()
++ void playPowerDownEffect()
++ void playPowerUpEffect()
++ void playPlayerHitEffect()
++ void playEnemyHitEffect()
++ void playNextStageEffect()
++ void playMainMenuMusic()
++ void stopMainMenuMusic()
++ void disposeAll()
+}
+
+
+class com.example.elements.Multiplier4x {
++ void effects(Player,long,int)
+}
+
+class com.example.elements.Nail {
+- double targetX
+- boolean targetToRight
+- boolean targetReachedX
+- int bulletSelection
+- Random random
+- GameplayController controller
++ Image getBulletImage()
+- void getTarget()
+- void moveX(double)
++ void update(double)
++ void shoot(long,double)
+- void bulletRain(long,double)
+- void bulletCenterScatter(long,double)
+- void bulletLeftScatter(long,double)
+- void bulletRightScatter(long,double)
+}
+
+
+abstract class com.example.elements.Enemy {
+- int enemyType
++ void setEnemyType(int)
++ int getEnemyType()
++ {abstract}void update(double)
++ {abstract}Image getBulletImage()
+}
+
+
+abstract class com.example.elements.PowerUp {
+- double powerUpSpeed
++ {abstract}void effects(Player,long,int)
++ void update()
++ void setPowerUpSpeed(double)
+}
+
+
+class com.example.elements.ScreenClear {
+- List<Bullet> enemyBullets
+- List<Enemy> enemyList
+- GameplayController controller
++ void effects(Player,long,int)
+}
+
+
+abstract class com.example.elements.Characters {
+# int lives
+# Image normal
+# Image damage
+# {static} long DAMAGE_DURATION
+# long lastDamageInstance
++ void setLives(int)
++ int getLives()
++ void takeDamage(int,long)
++ void revert(long)
++ boolean isAlive()
+}
+
+
+class com.example.attackofthelivingmodules.MainMenuController {
+- ImageView singlePlayerImage
+- ImageView twoPlayerImage
+- ImageView leaderboardImage
+- ImageView exitImage
+- Button singlePlayerButton
+- Button twoPlayerButton
+- Button leaderboardButton
+- Button exitButton
+- Image singlePlayerReleased
+- Image singlePlayerPressed
+- Image twoPlayerReleased
+- Image twoPlayerPressed
+- Image leaderboardReleased
+- Image leaderboardPressed
+- Image exitReleased
+- Image exitPressed
++ {static} Audio audio
+- void onSinglePlayerClick(ActionEvent)
+- void onTwoPlayerClick(ActionEvent)
+- void onLeaderboardClick(ActionEvent)
+- void onExitClick(ActionEvent)
+- void singlePlayerPressed()
+- void singlePlayerReleased()
+- void twoPlayerPressed()
+- void twoPlayerReleased()
+- void leaderboardPressed()
+- void leaderboardReleased()
+- void exitPressed()
+- void exitReleased()
+}
+
+
+class com.example.attackofthelivingmodules.EnterNameController {
+- Image submitReleased
+- Image submitPressed
+- int score
+- int numberOfPlayers
+- String fileName
+- List<Scores> ranking
+- VBox root
+- TextField textField
+- ImageView submitImage
+- Button submitButton
+- void onSubmitButtonClicked(ActionEvent)
+- void submitButtonPressed()
+- void submitButtonReleased()
+- void onTextFieldComma(KeyEvent)
++ void initialize(int,int,int,Audio)
+- void updateRankings()
+- void readFile(String)
+}
+
+
+abstract class com.example.elements.Multiplier {
+# Movement movement
+}
+
+class com.example.gameplay.Movement {
+- List<Bullet> playerBullets
+- List<Bullet> enemyBullets
+- List<Enemy> enemyList
+- List<PowerUp> powerUpList
+- List<Player> playerList
+- List<Player> deadPlayerList
+- GameplayController controller
+- boolean movingLeft
+- double mobGroupPos
+- int multiplier
+- boolean running
++ void movement(long,double)
++ int getMultiplier()
++ void setMultiplier(int)
+- void bulletMovement()
++ void setMobGroupPos(double)
+- void mobsMovement(long,double)
+- void nonMobMovement(long,double)
+- void powerUpMovement()
+- boolean isColliding(GameObject,GameObject)
++ void checkCollision(long,Audio)
+- List<Scores> readFile(String)
++ boolean isRunning()
+}
+
+
+class com.example.gameplay.SinglePlayerGameplay {
+- GraphicsContext gc
+- GameplayController controller
+- Image backgroundImage
+- Image player1Left
+- Image player1Right
+- Image player1LeftDamage
+- Image player1RightDamage
+- Image playerBullet
+- StageUp stageUp
+- Movement movement
+- Audio audio
+- Random random
+- Player player1
+- Set<KeyCode> keysPressed
+- List<Bullet> playerBullets
+- List<Bullet> enemyBullets
+- List<Enemy> enemyList
+- List<PowerUp> powerUpList
+- List<Player> playerList
+- List<Player> deadPlayerList
+- {static} long COOLDOWN
+- {static} long enemyBulletCooldown
+- long lastPlayerBulletTime
+- long lastEnemyBulletTime
+- double enemySpeed
+- {static} long SPAWN_TIME
+- long lastPowerUpSpawn
+- {static} double powerUpSpeed
+- void update(long)
+- void render(GraphicsContext)
+- void handleKeyPress(KeyEvent)
+- void handleKeyRelease(KeyEvent)
+- void drawPlayers()
+- void drawEnemies()
+- void drawBullets()
+- void drawPowerUp()
+- void shootBullet(long)
+- void spawnPowerUp(long)
+- void playerUpdates(long)
+- void playerMovement()
+}
+
+
+
+
+com.example.elements.PowerUp <|-- com.example.elements.SpeedBoost
+com.example.attackofthelivingmodules.TopController <|-- com.example.attackofthelivingmodules.LeaderboardController
+com.example.elements.PowerUp <|-- com.example.elements.ExtraLife
+com.example.elements.Enemy <|-- com.example.elements.Mid
+javafx.application.Application <|-- com.example.attackofthelivingmodules.MainApplication
+com.example.elements.Enemy <|-- com.example.elements.Mob
+com.example.elements.HighTierEnemy <|-- com.example.elements.Boss
+com.example.attackofthelivingmodules.TopController <|-- com.example.attackofthelivingmodules.GameplayController
+com.example.elements.PowerUp <|-- com.example.elements.AttackUp
+com.example.elements.Characters <|-- com.example.elements.Player
+com.example.elements.PowerUp <|-- com.example.elements.Invincibility
+com.example.elements.GameObject <|-- com.example.elements.Bullet
+com.example.elements.Multiplier <|-- com.example.elements.Multiplier2x
+com.example.elements.Enemy <|-- com.example.elements.HighTierEnemy
+com.example.elements.Multiplier <|-- com.example.elements.Multiplier4x
+com.example.elements.HighTierEnemy <|-- com.example.elements.Nail
+com.example.elements.Characters <|-- com.example.elements.Enemy
+com.example.elements.GameObject <|-- com.example.elements.PowerUp
+com.example.elements.PowerUp <|-- com.example.elements.ScreenClear
+com.example.elements.GameObject <|-- com.example.elements.Characters
+com.example.attackofthelivingmodules.TopController <|-- com.example.attackofthelivingmodules.MainMenuController
+com.example.attackofthelivingmodules.TopController <|-- com.example.attackofthelivingmodules.EnterNameController
+com.example.elements.PowerUp <|-- com.example.elements.Multiplier
+@enduml
